@@ -1,18 +1,18 @@
-# Entorno virtual
+# virtual env
 .venv/
 
-# Archivos de configuración sensibles
+# . env files
 .env
+.ipynb_checkpoints/
+.vscode/
+.DS_Store
 
-# Archivos de Python no necesarios
+
+# Unnecesary files
 __pycache__/
 *.py[cod]
 *.pyo
 
-# Archivos de logs
+# Log files
 *.log
 
-# Archivos de entorno de Jupyter, VSCode, etc.
-.ipynb_checkpoints/
-.vscode/
-.DS_Store
