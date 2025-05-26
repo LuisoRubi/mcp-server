@@ -52,7 +52,6 @@ class MCPClient:
     async def process_query(self, query: str, model="openai/gpt-3.5-turbo") -> str:
         messages = [{"role": "user", "content": [{"type": "text", "text": query}]}]
 
-        # Obtener herramientas del MCP Server
         response = await self.session.list_tools() # type: ignore
         available_tools = [{
             "name": tool.name,
@@ -60,7 +59,6 @@ class MCPClient:
             "input_schema": tool.inputSchema
         } for tool in response.tools]
 
-        # Preparar headers y payload para OpenRouter
         headers = {
             "Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}",
             "Content-Type": "application/json",
@@ -79,7 +77,6 @@ class MCPClient:
         assistant_reply = data["choices"][0]["message"]
         final_text = []
 
-        # Procesar la respuesta del LLM
         for block in assistant_reply["content"]:
             if block["type"] == "text":
                 final_text.append(block["text"])
@@ -93,7 +90,6 @@ class MCPClient:
                 tool_args = block["input"]
                 tool_use_id = block["id"]
 
-                # Ejecutar la herramienta MCP
                 tool_result = await self.session.call_tool(tool_name, tool_args) # type: ignore
 
                 messages.append({
